@@ -1,1 +1,107 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine 💘</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      background: #fff;
+    }
+    .card {
+      padding: 24px;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      text-align: center;
+      width: min(440px, 92vw);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .yay {
+      font-size: 18px;
+      margin: 10px 0 0;
+      min-height: 24px;
+    }
+    #arena {
+      position: relative;
+      height: 200px;
+      margin-top: 14px;
+      border-radius: 12px;
+      border: 1px dashed #ddd;
+      overflow: hidden;
+      background: rgba(255, 0, 100, 0.03);
+    }
+    .btn {
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      background: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #yesBtn { position: absolute; left: 80px; top: 85px; }
+    #noBtn  { position: absolute; left: 240px; top: 85px; }
+    .hint { color: #666; font-size: 12px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Will you be my Valentine? 💘</h2>
+    <div id="result" class="yay"></div>
+
+    <div id="arena">
+      <button id="yesBtn" class="btn">Yes 💖</button>
+      <button id="noBtn" class="btn">No 🙃</button>
+    </div>
+
+    <div class="hint">Try hovering (or tapping) “No” 😈</div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const answer = params.get("answer");
+
+    const result = document.getElementById("result");
+    const arena = document.getElementById("arena");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    if (answer === "yes") {
+      result.textContent = "YAY!! 💖 See you on Valentine’s 😄";
+      arena.style.display = "none";
+    }
+
+    function moveNoButton() {
+      const rect = arena.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = rect.width - btnRect.width;
+      const maxY = rect.height - btnRect.height;
+
+      const x = Math.floor(Math.random() * Math.max(1, maxX));
+      const y = Math.floor(Math.random() * Math.max(1, maxY));
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top  = y + "px";
+    }
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoButton(); });
+
+    yesBtn.addEventListener("click", () => {
+      result.textContent = "YAY!! 💖 See you on Valentine’s 😄";
+      arena.style.display = "none";
+      // optional: update URL:
+      // history.replaceState({}, "", "?answer=yes");
+    });
+  </script>
+</body>
+</html>
 
